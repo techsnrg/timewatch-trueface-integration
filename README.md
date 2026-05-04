@@ -1,61 +1,73 @@
-# TrueFace 3000 ERPNext Integration
+# TrueFace ERPNext Integration
 
-This repository contains two pieces:
+ERPNext/Frappe app for receiving TrueFace 3000 biometric attendance punches and creating `Employee Checkin` records.
 
-- `trueface_integration`: a Frappe/ERPNext app that receives TrueFace punch batches, stores raw punch logs, maps users to Employees, and creates `Employee Checkin` rows.
-- `connector/TrueFaceConnector`: a Windows Worker Service skeleton for the TrueFace NetSDK. It handles local queuing/retry and posts normalized punches to ERPNext.
+## What This App Includes
 
-The connector is intended to run on a Windows machine on the same LAN as the TrueFace 3000 because the provided SDK ships Windows native DLLs.
+- `TrueFace Device`
+- `TrueFace Punch Log`
+- `TrueFace Integration Settings`
+- `TrueFace Integration` workspace
+- API endpoint for punch ingestion:
 
-## ERPNext Install
-
-From a Frappe bench:
-
-```bash
-bench get-app /path/to/this/repo
-bench --site your-site install-app trueface_integration
-bench --site your-site migrate
+```text
+trueface_integration.api.attendance.receive_punches
 ```
 
-After install:
+The app stores raw punch logs, deduplicates events, maps TrueFace user IDs to ERPNext Employees, and creates `Employee Checkin` records. It does not create final `Attendance` records directly; HRMS or your existing attendance policy engine should process checkins.
 
-1. Open **TrueFace Integration Settings** and set an API token.
-2. Create a **TrueFace Device** with the device serial/IP.
-3. Ensure each ERPNext Employee has `custom_biometric_employee_code` equal to the TrueFace user ID.
+## Install
 
-## Connector
-
-The connector project targets Windows and .NET 8. Copy the SDK DLLs into the published connector folder on the Windows host, configure `appsettings.json`, then run it as a Windows Service.
-
-The SDK adapter is intentionally isolated behind `ITrueFaceSdkClient` so the service can be tested without the physical device.
-
-## Plug-and-Play Windows Package From Mac
-
-Preferred local flow, no GitHub build required:
-
-1. Install .NET 8 SDK for macOS:
-   https://dotnet.microsoft.com/en-us/download/dotnet/8.0
-2. Run:
+From your Frappe bench:
 
 ```bash
-chmod +x scripts/build-package-local-macos.sh
-scripts/build-package-local-macos.sh \
-  --sdk-zip "/Users/nikhil/Library/Mobile Documents/com~apple~CloudDocs/Downloads/TrueFace_SDK.zip"
+bench get-app https://github.com/techsnrg/timewatch-trueface-integration.git
+bench --site your-site-name install-app trueface_integration
+bench --site your-site-name migrate
+bench restart
 ```
 
-The output zip `dist/TrueFaceConnector-TargetPC.zip` is what you send to the target Windows PC. On that PC, extract it, edit `appsettings.json`, then right-click `install.bat` and choose **Run as administrator**.
+## Configure
 
-Fallback GitHub Actions flow:
+1. Open **TrueFace Integration Settings**.
+2. Set an API token.
+3. Create a **TrueFace Device** record.
+4. Set each Employee's **Biometric Employee Code** to match the TrueFace user ID.
 
-1. Open GitHub repo > **Actions** > **Build Windows Connector** > **Run workflow**.
-2. Download the artifact named `TrueFaceConnector-Windows`.
-3. Run:
+## API Payload
 
-```bash
-chmod +x scripts/package-trueface-connector-macos.sh
-scripts/package-trueface-connector-macos.sh \
-  --publish-zip ~/Downloads/TrueFaceConnector-Windows.zip \
-  --sdk-zip "/Users/nikhil/Library/Mobile Documents/com~apple~CloudDocs/Downloads/TrueFace_SDK.zip"
+POST to:
+
+```text
+/api/method/trueface_integration.api.attendance.receive_punches
 ```
 
-The output zip `dist/TrueFaceConnector-TargetPC.zip` is what you send to the target Windows PC. On that PC, extract it, edit `appsettings.json`, then right-click `install.bat` and choose **Run as administrator**.
+Example JSON:
+
+```json
+{
+  "device_id": "TF3000-001",
+  "api_token": "your-token",
+  "punches": [
+    {
+      "device_serial": "TF3000-001",
+      "record_number": "123",
+      "user_id": "EMP-001",
+      "card_no": "CARD-9",
+      "punch_time": "2026-05-04 09:15:00",
+      "direction": "ENTRY",
+      "attendance_state": "SIGNIN",
+      "status": true
+    }
+  ]
+}
+```
+
+## Mapping
+
+- TrueFace `user_id` maps to Employee `custom_biometric_employee_code`.
+- Direction/attendance state maps to `Employee Checkin.log_type` where possible:
+  - `ENTRY`, `SIGNIN` -> `IN`
+  - `EXIT`, `SIGNOUT` -> `OUT`
+
+Unmatched punches remain in **TrueFace Punch Log** with status **Unmatched Employee**.
