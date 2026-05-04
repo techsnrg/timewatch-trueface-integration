@@ -31,7 +31,21 @@ The SDK adapter is intentionally isolated behind `ITrueFaceSdkClient` so the ser
 
 ## Plug-and-Play Windows Package From Mac
 
-Use GitHub Actions to build the Windows connector, then package it with the TrueFace SDK DLLs on your Mac:
+Preferred local flow, no GitHub build required:
+
+1. Install .NET 8 SDK for macOS:
+   https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+2. Run:
+
+```bash
+chmod +x scripts/build-package-local-macos.sh
+scripts/build-package-local-macos.sh \
+  --sdk-zip "/Users/nikhil/Library/Mobile Documents/com~apple~CloudDocs/Downloads/TrueFace_SDK.zip"
+```
+
+The output zip `dist/TrueFaceConnector-TargetPC.zip` is what you send to the target Windows PC. On that PC, extract it, edit `appsettings.json`, then right-click `install.bat` and choose **Run as administrator**.
+
+Fallback GitHub Actions flow:
 
 1. Open GitHub repo > **Actions** > **Build Windows Connector** > **Run workflow**.
 2. Download the artifact named `TrueFaceConnector-Windows`.
