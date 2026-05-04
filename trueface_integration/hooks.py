@@ -9,5 +9,6 @@ after_install = "trueface_integration.setup.after_install"
 after_migrate = "trueface_integration.setup.after_migrate"
 
 fixtures = [
+	{"dt": "Workspace", "filters": [["name", "=", "TrueFace Integration"]]},
 	{"dt": "Custom Field", "filters": [["dt", "=", "Employee"]]},
 ]

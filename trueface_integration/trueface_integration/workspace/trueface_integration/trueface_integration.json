@@ -1,0 +1,115 @@
+{
+ "category": "Modules",
+ "charts": [],
+ "content": "[{\"id\":\"tf_header_1\",\"type\":\"header\",\"data\":{\"text\":\"Device Setup\",\"col\":12}},{\"id\":\"tf_shortcut_1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"TrueFace Device\",\"col\":3}},{\"id\":\"tf_shortcut_2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"TrueFace Integration Settings\",\"col\":3}},{\"id\":\"tf_header_2\",\"type\":\"header\",\"data\":{\"text\":\"Attendance Sync\",\"col\":12}},{\"id\":\"tf_shortcut_3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"TrueFace Punch Log\",\"col\":3}},{\"id\":\"tf_shortcut_4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Checkin\",\"col\":3}}]",
+ "creation": "2026-05-04 00:00:00.000000",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "doctype": "Workspace",
+ "extends": "",
+ "extends_another_page": 0,
+ "hide_custom": 0,
+ "icon": "fingerprint",
+ "is_default": 0,
+ "is_hidden": 0,
+ "label": "TrueFace Integration",
+ "links": [
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Device Setup",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "TrueFace Device",
+   "link_count": 0,
+   "link_to": "TrueFace Device",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "TrueFace Integration Settings",
+   "link_count": 0,
+   "link_to": "TrueFace Integration Settings",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance Sync",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "TrueFace Punch Log",
+   "link_count": 0,
+   "link_to": "TrueFace Punch Log",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Employee Checkin",
+   "link_count": 0,
+   "link_to": "Employee Checkin",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-05-04 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "TrueFace Integration",
+ "name": "TrueFace Integration",
+ "owner": "Administrator",
+ "public": 1,
+ "restrict_to_domain": "",
+ "roles": [],
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "label": "TrueFace Device",
+   "link_to": "TrueFace Device",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "label": "TrueFace Integration Settings",
+   "link_to": "TrueFace Integration Settings",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "label": "TrueFace Punch Log",
+   "link_to": "TrueFace Punch Log",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "label": "Employee Checkin",
+   "link_to": "Employee Checkin",
+   "type": "DocType"
+  }
+ ],
+ "title": "TrueFace Integration"
+}
