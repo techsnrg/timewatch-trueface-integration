@@ -28,3 +28,20 @@ After install:
 The connector project targets Windows and .NET 8. Copy the SDK DLLs into the published connector folder on the Windows host, configure `appsettings.json`, then run it as a Windows Service.
 
 The SDK adapter is intentionally isolated behind `ITrueFaceSdkClient` so the service can be tested without the physical device.
+
+## Plug-and-Play Windows Package From Mac
+
+Use GitHub Actions to build the Windows connector, then package it with the TrueFace SDK DLLs on your Mac:
+
+1. Open GitHub repo > **Actions** > **Build Windows Connector** > **Run workflow**.
+2. Download the artifact named `TrueFaceConnector-Windows`.
+3. Run:
+
+```bash
+chmod +x scripts/package-trueface-connector-macos.sh
+scripts/package-trueface-connector-macos.sh \
+  --publish-zip ~/Downloads/TrueFaceConnector-Windows.zip \
+  --sdk-zip "/Users/nikhil/Library/Mobile Documents/com~apple~CloudDocs/Downloads/TrueFace_SDK.zip"
+```
+
+The output zip `dist/TrueFaceConnector-TargetPC.zip` is what you send to the target Windows PC. On that PC, extract it, edit `appsettings.json`, then right-click `install.bat` and choose **Run as administrator**.
