@@ -1,0 +1,53 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-05-04 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "device_name",
+  "device_serial",
+  "network_section",
+  "ip_address",
+  "port",
+  "username",
+  "password",
+  "timezone",
+  "location",
+  "sync_section",
+  "last_sync_at",
+  "last_record_number",
+  "last_error"
+ ],
+ "fields": [
+  {"default": "1", "fieldname": "enabled", "fieldtype": "Check", "label": "Enabled"},
+  {"fieldname": "device_name", "fieldtype": "Data", "in_list_view": 1, "label": "Device Name", "reqd": 1},
+  {"fieldname": "device_serial", "fieldtype": "Data", "in_list_view": 1, "label": "Device Serial", "reqd": 1, "unique": 1},
+  {"fieldname": "network_section", "fieldtype": "Section Break", "label": "Network"},
+  {"fieldname": "ip_address", "fieldtype": "Data", "in_list_view": 1, "label": "IP Address"},
+  {"default": "37777", "fieldname": "port", "fieldtype": "Int", "label": "Port"},
+  {"fieldname": "username", "fieldtype": "Data", "label": "Username"},
+  {"fieldname": "password", "fieldtype": "Password", "label": "Password"},
+  {"default": "Asia/Kolkata", "fieldname": "timezone", "fieldtype": "Data", "label": "Timezone"},
+  {"fieldname": "location", "fieldtype": "Data", "label": "Location"},
+  {"fieldname": "sync_section", "fieldtype": "Section Break", "label": "Sync State"},
+  {"fieldname": "last_sync_at", "fieldtype": "Datetime", "label": "Last Sync At", "read_only": 1},
+  {"fieldname": "last_record_number", "fieldtype": "Int", "label": "Last Record Number", "read_only": 1},
+  {"fieldname": "last_error", "fieldtype": "Small Text", "label": "Last Error", "read_only": 1}
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-05-04 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "TrueFace Integration",
+ "name": "TrueFace Device",
+ "owner": "Administrator",
+ "permissions": [
+  {"create": 1, "delete": 1, "email": 1, "export": 1, "print": 1, "read": 1, "report": 1, "role": "System Manager", "share": 1, "write": 1},
+  {"create": 1, "email": 1, "export": 1, "print": 1, "read": 1, "report": 1, "role": "HR Manager", "share": 1, "write": 1}
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,2 @@
+include README.md
+recursive-include trueface_integration *.json *.py *.txt
